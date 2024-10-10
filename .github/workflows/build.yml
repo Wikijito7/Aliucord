@@ -57,7 +57,7 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: always()
     needs: [ build ]
     permissions:
       contents: write
@@ -80,7 +80,7 @@ jobs:
           path: artifacts
 
       - name: Deploy builds
-        if: github.ref == 'refs/heads/main'
+        if: always()
         run: |
           # Flatten downloaded artifacts
           find $GITHUB_WORKSPACE/artifacts -type f -exec mv -t $GITHUB_WORKSPACE/artifacts '{}' +
